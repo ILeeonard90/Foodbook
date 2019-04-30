@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createRecipie } from '../../store/actions/RecipieActions';
+import { createRecipe } from '../../store/actions/RecipeActions';
+import { Redirect } from 'react-router-dom';
 
-class CreateRecipie extends Component {
+class CreateRecipe extends Component {
     
     state = {
         title: '',
@@ -19,16 +20,21 @@ class CreateRecipie extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.createRecipie(this.state);
+        this.props.createRecipe(this.state);
     }
 
     render() {
+
+        const { auth } = this.props;
+        if (!auth.uid) {
+            return <Redirect to='/signin' />
+        }
         return (
             <div className="container">
                 <form onSubmit={this.handleSubmit} className="white">
-                    <h5 className="grey-text text-darken-3">Create a Recipie</h5>
+                    <h5 className="grey-text text-darken-3">Create a Recipe</h5>
                     <div className="input-field">
-                        <label htmlFor="title">Recipie Name</label>
+                        <label htmlFor="title">Recipe Name</label>
                         <input type="text" id="title" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
@@ -56,10 +62,16 @@ class CreateRecipie extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
     return {
-        createRecipie: (recipie) => dispatch(createRecipie(recipie))
+        auth: state.firebase.auth
     }
 }
 
-export default connect(null,mapDispatchToProps)(CreateRecipie)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createRecipe: (recipe) => dispatch(createRecipe(recipe))
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(CreateRecipe)

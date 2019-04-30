@@ -1,5 +1,5 @@
 const initState = {
-    recipies: [
+    recipes: [
         {
             id:1,title: 'Burger', desription: 'tasty', ingredients: 'meat and buns', instructions: 'cook',
             notes: 'its good'
@@ -16,10 +16,10 @@ const initState = {
     ]
 }
 
-const RecipieReducer = (state = initState, action) => {
+const RecipeReducer = (state = initState, action) => {
     switch (action.type) {
-        case 'CREATE_RECIPIE':
-            console.log('created project ', action.recipie);
+        case 'CREATE_RECIPE':
+            console.log('created project ', action.recipe);
             return state;
         case 'CREATE_PROJECT_ERROR':
             console.log('create project error ', action.err);
@@ -29,4 +29,4 @@ const RecipieReducer = (state = initState, action) => {
     }
 }
 
-export default RecipieReducer
+export default RecipeReducer

@@ -2,9 +2,10 @@ import React from 'react';
 import { BrowserRouter , Switch , Route } from 'react-router-dom';
 import NavBar from './components/layout/NavBar';
 import DashBoard from './components/dashboard/DashBoard';
-import RecipiesPage from './components/recipes/RecipiesPage';
-import RecipieDetails from './components/recipes/RecipieDetails';
-import CreateRecipie from './components/recipes/CreateRecipie';
+import RecipesPage from './components/recipes/RecipesPage';
+import RecipeDetails from './components/recipes/RecipeDetails';
+import IngredientsPage from './components/ingredients/IngredientsPage';
+import CreateRecipe from './components/recipes/CreateRecipe';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 
@@ -16,9 +17,10 @@ function App() {
         <NavBar />
         <Switch>
           <Route exact path='/' component={DashBoard} />
-          <Route path='/recipie/:id' component={RecipieDetails} />
-          <Route path='/recipiespage' component={RecipiesPage} />
-          <Route path='/createrecipie' component={CreateRecipie} />
+          <Route path='/recipe/:id' component={RecipeDetails} />
+          <Route path='/ingredientspage' component={IngredientsPage} />
+          <Route path='/recipespage' component={RecipesPage} />
+          <Route path='/createrecipe' component={CreateRecipe} />
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} /> 
         </Switch>

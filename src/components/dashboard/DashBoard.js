@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import ShoppingList from './ShoppingList';
-import RecipiesList from '../recipes/RecipiesList';
+import RecipesList from '../recipes/RecipesList';
 import IngredientsList from '../ingredients/IngredientsList';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
+import { Redirect } from 'react-router-dom';
 
 class DashBoard extends Component{
     render() {
-        const { ingredients } = this.props;
-        const { recipies } = this.props;
+        const { ingredients, recipes, auth } = this.props;
+       if (!auth.uid) {
+           return <Redirect to='/signin' />
+        }
         return (
             <div className="dashboard container">
                 <div className="row">
@@ -17,7 +20,7 @@ class DashBoard extends Component{
                         <IngredientsList ingredients={ingredients}/>
                     </div>
                     <div className="col s12 m4 offset-m1">
-                        <RecipiesList recipies={recipies}/>
+                        <RecipesList recipes={recipes}/>
                     </div>
                     <div className="col s12 m3 offset-m1">
                         <ShoppingList />
@@ -31,13 +34,15 @@ class DashBoard extends Component{
 const mapStateToProps = (state) => {
     console.log(state);
     return {
-        recipies: state.recipies.recipies,
-        ingredients: state.ingredients.ingredients
+        recipes: state.firestore.ordered.recipes,
+        ingredients: state.firestore.ordered.ingredients,
+        auth: state.firebase.auth
     }
 }
 export default compose(
         connect(mapStateToProps),
         firestoreConnect([
-            { collection: 'recipes' }
+            { collection: 'recipes' },
+            { collection: 'ingredients'}
         ])
 )(DashBoard)
