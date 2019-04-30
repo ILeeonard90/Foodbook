@@ -1,13 +1,15 @@
 import React from 'react';
 import RecipiesListItem from './RecipiesListItem';
 
-const RecipiesList = () => {
+const RecipiesList = ({ recipies }) => {
     return (
         <div className="section">
             <div className="row">
-                <div className="col s12" >
-                    <RecipiesListItem />
-                </div >
+                {recipies && recipies.map(recipie => {
+                    return (
+                        <RecipiesListItem recipie={recipie} key={recipie.id} />
+                    )
+                })}
             </div>
         </div>
     )

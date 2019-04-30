@@ -1,11 +1,15 @@
 import React from 'react';
 import IngredientsListItem from './IngredientsListItem';
 
-const IngredientsList = () => {
+const IngredientsList = ({ ingredients }) => {
     return (
         <div className="section">
             <ul className="collection">
-                <IngredientsListItem />
+                {ingredients && ingredients.map(ingredient => {
+                    return (
+                        <IngredientsListItem ingredient={ingredient} key={ingredient.id}/>
+                    )
+                })}
             </ul>
         </div>
     )

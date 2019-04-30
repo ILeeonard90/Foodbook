@@ -1,18 +1,20 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const RecipiesListItem = () => {
+const RecipiesListItem = ({recipie}) => {
     return (
-        <div className="card">
-            <div className="card-image">
-                <img src={require("../../food.png")} alt={"no -alt"} />
-                <span className="card-title">Recipie name</span>
-            </div>
-            <div className="card-content">
-                <p>Recipie Description etc ....</p>
-            </div>
-            <div className="card-action">
-                <NavLink to='/'> To Recipie Details</NavLink>
+        <div className="col s12" >
+            <div className="card">
+                <div className="card-image">
+                    <img src={require("../../food.png")} alt={"no -alt"} />
+                    <span className="card-title">{recipie.title}</span>
+                </div>
+                <div className="card-content">
+                    <p>{recipie.title}</p>
+                </div>
+                <div className="card-action">
+                    <NavLink to='/'> To Recipie Details</NavLink>
+                </div>
             </div>
         </div>
     )

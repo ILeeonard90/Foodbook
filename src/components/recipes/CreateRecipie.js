@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createRecipie } from '../../store/actions/RecipieActions';
 
 class CreateRecipie extends Component {
     
@@ -10,12 +12,14 @@ class CreateRecipie extends Component {
         notes: ''
     }
     handleChange = (e) => {
-        console.log(e);
+        this.setState({
+            [e.target.id]: e.target.value
+        })
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(e);
+        this.props.createRecipie(this.state);
     }
 
     render() {
@@ -52,5 +56,10 @@ class CreateRecipie extends Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createRecipie: (recipie) => dispatch(createRecipie(recipie))
+    }
+}
 
-export default CreateRecipie
+export default connect(null,mapDispatchToProps)(CreateRecipie)
