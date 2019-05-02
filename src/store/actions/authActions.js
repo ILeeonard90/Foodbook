@@ -1,5 +1,5 @@
 export const signIn = (credentials) => {
-    return (dispatch, getState, { getFirebase }) => {
+    return (dispatch,getState, { getFirebase }) => {
         const firebase = getFirebase();
 
         firebase.auth().signInWithEmailAndPassword(
@@ -14,7 +14,7 @@ export const signIn = (credentials) => {
 }
 
 export const signOut = () => {
-    return (dispatch, setState, { getFirebase }) => {
+    return (dispatch,getState, { getFirebase }) => {
         const firebase = getFirebase();
 
         firebase.auth().signOut().then(() => {
@@ -25,7 +25,7 @@ export const signOut = () => {
 }
 
 export const signUp = (newUser) => {
-    return (dispatch, state, { getFirebase, getFirestore }) => {
+    return (dispatch,getState,{ getFirebase, getFirestore }) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
 
@@ -34,10 +34,14 @@ export const signUp = (newUser) => {
             newUser.password
         ).then(resp => {
             return  firestore.collection('users').doc(resp.user.uid).set({
-                        firstName: newUser.firstname,
-                        lastName: newUser.lastname,
-                        initials: newUser.firstname[0] + newUser.lastname[0]
-                    })
+                firstName: newUser.firstname,
+                lastName: newUser.lastname,
+                initials: newUser.firstname[0] + newUser.lastname[0]
+            }).then(() => {
+                firestore.collection(resp.user.uid).doc('private').collection('recipes')
+            }).then(() => {
+                    firestore.collection(resp.user.uid).doc('private').collection('ingredients');
+                }); 
         }).then(() => {
             dispatch({ type: 'SIGNUP_SUCCESS' });
         }).catch((err) => {
@@ -45,3 +49,4 @@ export const signUp = (newUser) => {
         })
     }
 } 
+

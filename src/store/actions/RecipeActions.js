@@ -1,7 +1,7 @@
 export const createRecipe = (recipe) => {
-    return (dispatch, getState, { getFirebase, getFirestore }) => { 
+    return (dispatch, getState, { getFirestore }) => { 
         const firestore = getFirestore();
-        firestore.collection('recipes').add({
+        firestore.collection(getState.firebase.auth.uid).doc('private').collection('recipes').add({
             ...recipe
         }).then(() => {
             dispatch({ type: 'CREATE_RECIPIE', recipe });
